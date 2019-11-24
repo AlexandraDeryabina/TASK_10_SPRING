@@ -30,12 +30,12 @@ public class PersonService {
         return repository.getById(id);
     }
 
-    public void save(Map<String, String> request) {
+    public void save(String name, String surname, String patronymic, String dateOfBirth) {
         Person person = new Person(
-                request.get("name") != "" ? request.get("name") : null,
-                request.get("surname") != "" ? request.get("surname") : null,
-                LocalDate.parse(request.get("dateOfBirth")));
-        person.setPatronymic(request.get("patronymic"));
+                name != "" ? name : null,
+                surname != "" ? surname : null,
+                LocalDate.parse(dateOfBirth));
+        person.setPatronymic(patronymic);
         repository.save(person);
     }
 }

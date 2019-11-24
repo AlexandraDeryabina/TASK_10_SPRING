@@ -24,11 +24,14 @@ public class AddressController {
 
     @RequestMapping(value = "/address", method = RequestMethod.POST)
     public ModelAndView saveAddress(
-            @RequestParam Map<String, String> request
+            @RequestParam("street") String street,
+            @RequestParam("house") String house,
+            @RequestParam("flat") String flat,
+            @RequestParam("person") String person
     ) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            addressService.save(request);
+            addressService.save(street, house, flat, person);
 
             modelAndView.addObject("personList", personService.getList(true));
             modelAndView.setViewName("/result");

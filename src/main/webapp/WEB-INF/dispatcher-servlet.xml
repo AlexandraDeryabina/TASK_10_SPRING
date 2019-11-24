@@ -16,5 +16,8 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+    </bean>
 
 </beans>

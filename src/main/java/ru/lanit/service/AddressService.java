@@ -18,14 +18,14 @@ public class AddressService {
         this.personService = personService;
     }
 
-    public void save(Map<String, String> request) {
+    public void save(String street, String house, String flat, String person) {
         Address address = new Address();
-        address.setStreet(request.get("street") != "" ? request.get("street") : null);
-        address.setHouse(request.get("house") != "" ? request.get("house") : null);
-        address.setFlat(request.get("flat"));
+        address.setStreet(street != "" ? street : null);
+        address.setHouse(house != "" ? house : null);
+        address.setFlat(flat);
 
         address.setPerson(personService.
-                getById(Integer.parseInt(request.get("person"))));
+                getById(Integer.parseInt(person)));
 
         addressRepository.save(address);
     }

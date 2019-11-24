@@ -1,11 +1,11 @@
 package ru.lanit.repository;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.lanit.model.Person;
-import ru.lanit.provider.SessionProvider;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,15 +15,15 @@ import java.util.List;
 
 @Repository
 public class PersonRepository {
-    private SessionProvider provider;
+    private SessionFactory sessionFactory;
 
     @Autowired
-    public PersonRepository(SessionProvider provider) {
-        this.provider = provider;
+    public PersonRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     public List<Person> getList(boolean needFullFetch) {
-        try (Session session = provider.getSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Person> query = builder.createQuery(Person.class);
             Root<Person> root = query.from(Person.class);
@@ -38,7 +38,7 @@ public class PersonRepository {
     }
 
     public Person getById(int id) {
-        try (Session session = provider.getSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Person> query = builder.createQuery(Person.class);
             Root<Person> root = query.from(Person.class);
@@ -49,7 +49,7 @@ public class PersonRepository {
     }
 
     public void save(Person person) {
-        try (Session session = provider.getSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(person);
             session.getTransaction().commit();

@@ -21,11 +21,14 @@ public class PersonController {
 
     @RequestMapping(value = "/fullName", method = RequestMethod.POST)
     public ModelAndView savePerson(
-            @RequestParam Map<String, String> request
+            @RequestParam("name") String name,
+            @RequestParam("surname") String surname,
+            @RequestParam("patronymic") String patronymic,
+            @RequestParam("dateOfBirth") String dateOfBirth
     ) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            personService.save(request);
+            personService.save(name, surname, patronymic, dateOfBirth);
 
             modelAndView.addObject("personList", personService.getList());
             modelAndView.setViewName("/address");
